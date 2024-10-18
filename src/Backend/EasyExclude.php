@@ -36,7 +36,7 @@ class EasyExclude extends Backend
 	 */
 	public function addUsergroupSelect($strContent, $strTemplate)
 	{
-		if($strTemplate == 'be_main' && $GLOBALS['EasyExclude']['addEasyExclude'])
+		if($strTemplate == 'be_main' && isset($GLOBALS['EasyExclude']['addEasyExclude']) && $GLOBALS['EasyExclude']['addEasyExclude'])
 		{
 			$strContent = preg_replace('/(<h1 id="main_headline">.*<\/h1>)/', "$1" . $this->generateUsergroupSelect(), $strContent);
 		}
@@ -98,6 +98,10 @@ class EasyExclude extends Backend
 
 				foreach($arrFields as $field)
 				{
+          if(!isset($GLOBALS['TL_DCA'][$strTable]['fields'][$field]['eval']['tl_class']))
+          {
+            continue;
+          }
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$field]['eval']['tl_class'] = trim($GLOBALS['TL_DCA'][$strTable]['fields'][$field]['eval']['tl_class'] . ' easyExclude easyExcludeFN_' . $field);
 				}
 
